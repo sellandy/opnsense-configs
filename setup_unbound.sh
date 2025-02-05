@@ -13,6 +13,12 @@ if [ $(id -u) -ne 0 ]; then
     exit 1
 fi
 
+# Check if a domain argument is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <your-domain>"
+    exit 1
+fi
+
 # Create the targets file with required content
 echo "private_domains.conf:/usr/local/etc/unbound.opnsense.d/private_domains.conf" > "$targets_file"
 echo "expert.conf:/usr/local/etc/unbound.opnsense.d/expert.conf" >> "$targets_file"
@@ -20,7 +26,7 @@ echo "expert.conf:/usr/local/etc/unbound.opnsense.d/expert.conf" >> "$targets_fi
 # Create the private domains template file
 cat <<EOF > "$template_file"
 server:
-  local-data: "mycharon.freeddns.org. 3600 IN SOA ns1.dynu.com. administrator.dynu.com. 44196965 1800 300 86400 1800"
+  local-data: "$DOMAIN. 3600 IN SOA ns1.dynu.com. administrator.dynu.com. 44196965 1800 300 86400 1800"
 EOF
 
 # Create the expert configuration template file
@@ -52,4 +58,3 @@ configctl unbound check
 
 # Restart Unbound service
 configctl unbound restart
-
