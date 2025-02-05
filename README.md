@@ -1,5 +1,5 @@
 # opnsense-configs
-All OPNsense configuration files and scripts that cannot be set via the GUI.
+Alle OPNsense-Konfigurationsdateien und Skripte, die nicht über die GUI eingestellt werden können.
 
 # OPNsense Unbound Setup
 
@@ -49,6 +49,7 @@ Falls keine Domain übergeben wird, gibt das Skript eine Fehlermeldung aus.
 
 4. **Tor-Integration:**
    - Erlaubt das Setzen von `.onion` als private Domain.
+   - Weitere Informationen zur sicheren Nutzung von Tor mit OPNsense findest du in diesem Blogpost: [Sicherer Zugriff auf .onion-Seiten mit OPNsense und Tor](https://sellandy.de/sicherer-zugriff-auf-onion-seiten-mit-opnsense-und-tor)
 
 5. **Unbound neu starten:**
    - Nach den Änderungen wird die Konfiguration geprüft und der Dienst neugestartet.
@@ -58,8 +59,9 @@ Nach dem Skriptlauf generiert Unbound die folgenden Dateien:
 ### `private_domains.conf`
 ```yaml
 server:
-  local-data: "example.com. 3600 IN SOA ns1.dynu.com. administrator.dynu.com. 44196965 1800 300 86400 1800"
+  local-data: "freeddns.org. 3600 IN SOA ns1.dynu.com. administrator.dynu.com. 44196965 1800 300 86400 1800"
 ```
+Am Beispiel von dynu.com.
 
 ### `expert.conf`
 ```yaml
