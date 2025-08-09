@@ -10,8 +10,11 @@ if [ $(id -u) -ne 0 ]; then
     exit 1
 fi
 
+echo -n "Bitte Domain eingeben: "
+read domain
+
 # Check if a domain argument is provided
-if [ -z "$1" ]; then
+if [ -z $domain ]; then
     echo "Usage: $0 <your-domain>"
     exit 1
 fi
@@ -34,7 +37,7 @@ for ENTRY in $FILES; do
     cp "$SCRIPT_DIR/$SRC" "$DEST" || exit 1
 done
 
-sed -i "s/@@domain@@/$1/g" /usr/local/opnsense/service/templates/OPNsense/Unbound/mylocaldomain.conf 
+sed -i '' "s/@@domain@@/${domain}/g" /usr/local/opnsense/service/templates/OPNsense/Unbound/mylocaldomain.conf 
 
 # Generate the templates
 configctl template reload OPNsense/Unbound
