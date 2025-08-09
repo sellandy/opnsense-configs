@@ -16,15 +16,13 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-echo "$1"
-exit 1
-
 # Mapping-Tabelle: "Quelle|Ziel"
 FILES="
 +TARGETS|/usr/local/opnsense/service/templates/OPNsense/Unbound/+TARGETS
-expert.conf|/usr/local/etc/unbound.opnsense.d/expert.conf
-access-list-PD.conf:|/usr/local/etc/unbound.opnsense.d/access-list-PD.conf
-mylocaldomain.conf:/usr/local/etc/unbound.opnsense.d/mylocaldomain.conf
+expert.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/expert.conf
+access-list-PD.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/access-list-PD.conf
+update-kea-dhcp6.sh|/usr/local/sbin/update-kea-dhcp6.sh 
+mylocaldomain.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/mylocaldomain.conf
 "
 
 for ENTRY in $FILES; do
@@ -35,6 +33,8 @@ for ENTRY in $FILES; do
     mkdir -p "$(dirname "$DEST")" || exit 1
     cp "$SCRIPT_DIR/$SRC" "$DEST" || exit 1
 done
+
+sed -i "s/@@domain@@/$1/g" /usr/local/opnsense/service/templates/OPNsense/Unbound/mylocaldomain.conf 
 
 # Generate the templates
 configctl template reload OPNsense/Unbound
