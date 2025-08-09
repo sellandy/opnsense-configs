@@ -1,11 +1,8 @@
 #!/bin/sh
 
-# Define file paths
-targets_file="/usr/local/opnsense/service/templates/OPNsense/Unbound/+TARGETS"
-template_file="/usr/local/opnsense/service/templates/OPNsense/Unbound/private_domains.conf"
-expert_template_file="/usr/local/opnsense/service/templates/OPNsense/Unbound/expert.conf"
-generated_file="/usr/local/etc/unbound.opnsense.d/private_domains.conf"
-generated_expert_file="/usr/local/etc/unbound.opnsense.d/expert.conf"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+echo $SCRIPT_DIR
 
 # Ensure script runs with appropriate privileges
 if [ $(id -u) -ne 0 ]; then
@@ -19,39 +16,28 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-# Create the targets file with required content
-echo "private_domains.conf:/usr/local/etc/unbound.opnsense.d/private_domains.conf" > "$targets_file"
-echo "expert.conf:/usr/local/etc/unbound.opnsense.d/expert.conf" >> "$targets_file"
+echo "$1"
+exit 1
 
-# Create the private domains template file
-cat <<EOF > "$template_file"
-server:
-  local-data: "$DOMAIN. 3600 IN SOA ns1.dynu.com. administrator.dynu.com. 44196965 1800 300 86400 1800"
-EOF
+# Mapping-Tabelle: "Quelle|Ziel"
+FILES="
++TARGETS|/usr/local/opnsense/service/templates/OPNsense/Unbound/+TARGETS
+expert.conf|/usr/local/etc/unbound.opnsense.d/expert.conf
+access-list-PD.conf:|/usr/local/etc/unbound.opnsense.d/access-list-PD.conf
+mylocaldomain.conf:/usr/local/etc/unbound.opnsense.d/mylocaldomain.conf
+"
 
-# Create the expert configuration template file
-cat <<EOF > "$expert_template_file"
-server:
-  #  domain-insecure: "onion"
-  #  private-domain: "onion"
-  local-zone: "onion." nodefault
+for ENTRY in $FILES; do
+    SRC=$(echo "$ENTRY" | cut -d"|" -f1)
+    DEST=$(echo "$ENTRY" | cut -d"|" -f2)
 
-  # Reduce EDNS reassembly buffer size.
-  edns-buffer-size: 1232
-
-  # Don't use Capitalization randomization as it known to cause DNSSEC issues sometimes
-  use-caps-for-id: no
-
-  # Trust glue only if it is within the server's authority
-  harden-glue: yes
-EOF
+    echo "Kopiere $SRC → $DEST"
+    mkdir -p "$(dirname "$DEST")" || exit 1
+    cp "$SCRIPT_DIR/$SRC" "$DEST" || exit 1
+done
 
 # Generate the templates
 configctl template reload OPNsense/Unbound
-
-# Display the generated files
-cat "$generated_file"
-cat "$generated_expert_file"
 
 # Check if the configuration is valid
 configctl unbound check

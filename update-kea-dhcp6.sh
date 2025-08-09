@@ -1,10 +1,16 @@
 #!/bin/sh
 
+# --- Funktion: Nur re0 + VLANs erkennen ---
+get_re0_and_vlans() {
+    ifconfig -l | tr ' ' '\n' | grep -E '^(re0|vlan[0-9]+)$'
+}
+
+
 # === Variablen ===
 KEA_CONF="/usr/local/etc/kea/subnet6.json"
 KEA_BACKUP="/usr/local/etc/kea/subnet6.json.bak"
 KEA6_CONF="/usr/local/etc/kea/kea-dhcp6.conf"
-KEA_IFS="re0 vlan01 vlan02 vlan04 vlan05 vlan06"
+KEA_IFS=$(get_re0_and_vlans)
 POOL_START=":1000"
 POOL_END=":2000"
 TMP_CONF="/tmp/kea-dhcp6.conf.tmp"
