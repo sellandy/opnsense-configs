@@ -7,12 +7,14 @@ Dieses Repository enthält Skripte zur Konfiguration von **Unbound** auf OPNsens
 
 ## Funktionen des Setup-Skripts
 
-Das Skript **setup_unbound.sh** führt folgende Aufgaben aus:
+Das Skript **setup.sh** führt folgende Aufgaben aus:
 - Es nutzt den **OPNsense-Template-Mechanismus**, um Konfigurationsdateien für Unbound zu generieren.
-- Es erstellt eine **SOA (Start of Authority) für private Domains**.
-- Es fügt **Sicherheitsoptimierungen** hinzu.
+- Es fügt **Sicherheitsoptimierungen** hinzu für Unbound.
 - Es ermöglicht **Einstellungen für die Nutzung von Tor** über Unbound.
 - Es setzt eine **benutzerdefinierte Domain**, die als Argument übergeben werden kann.
+  Die (lokale) Domain wollen wir später Autoritativ über BIND verwalten lassen.
+- Es wird ein **IPv6 Dynamic Address Assignment** Update-Skript für den KEA DHCP bereitgestellt.
+  Dieses muss in **/var/etc/dhcp6c_wan_script.sh** aufgerufen werden (trigger)
 
 ## Installation
 Falls `git` nicht auf OPNsense installiert ist, kann es mit folgendem Befehl hinzugefügt werden:
@@ -53,24 +55,6 @@ Falls keine Domain übergeben wird, gibt das Skript eine Fehlermeldung aus.
 
 5. **Unbound neu starten:**
    - Nach den Änderungen wird die Konfiguration geprüft und der Dienst neugestartet.
-
-## Beispiel für die generierte Konfiguration
-Nach dem Skriptlauf generiert Unbound die folgenden Dateien:
-### `private_domains.conf`
-```yaml
-server:
-  local-data: "freeddns.org. 3600 IN SOA ns1.dynu.com. administrator.dynu.com. 44196965 1800 300 86400 1800"
-```
-Am Beispiel von dynu.com.
-
-### `expert.conf`
-```yaml
-server:
-  local-zone: "onion." nodefault
-  edns-buffer-size: 1232
-  use-caps-for-id: no
-  harden-glue: yes
-```
 
 ## Lizenz
 Dieses Projekt ist unter der **MIT-Lizenz** veröffentlicht. Siehe die Datei `LICENSE` für weitere Details.
