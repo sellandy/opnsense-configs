@@ -43,7 +43,6 @@ Falls keine Domain übergeben wird, gibt das Skript eine Fehlermeldung aus.
    - Weist Unbound an, Konfigurationsdateien aus einem spezifischen Verzeichnis zu laden.
 
 2. **Private Domain einfügen:**
-   - Erstellt eine **SOA für private Domains** in der Datei `private_domains.conf`.
    - Die Domain wird aus dem übergebenen Argument gesetzt.
 
 3. **Erweiterte Sicherheitseinstellungen für Unbound:**
@@ -55,6 +54,10 @@ Falls keine Domain übergeben wird, gibt das Skript eine Fehlermeldung aus.
 
 5. **Unbound neu starten:**
    - Nach den Änderungen wird die Konfiguration geprüft und der Dienst neugestartet.
+
+6. **Bereitstellen eines Kea-update-Skripts**
+   - Das Shell Scrikpt macht ersmal gar nichts. Es muss entsprechend eingebunden werden um einen Trigger zu erhalten.
+     Empfehlung **/var/etc/dhcp6c_wan_script.sh**. Achtung dieses File wird nach einem OPNsense Update ersetzt!
 
 ## Lizenz
 Dieses Projekt ist unter der **MIT-Lizenz** veröffentlicht. Siehe die Datei `LICENSE` für weitere Details.
