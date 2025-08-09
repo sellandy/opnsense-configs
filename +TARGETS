@@ -1,0 +1,4 @@
+expert.conf:/usr/local/etc/unbound.opnsense.d/expert.conf
+mycharon.conf:/usr/local/etc/unbound.opnsense.d/mylocaldomain.conf
+trust-anchors.conf:/var/unbound/trust-anchors.conf
+access-list-PD.conf:/usr/local/etc/unbound.opnsense.d/access-list-PD.conf
