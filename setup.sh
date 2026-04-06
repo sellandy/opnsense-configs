@@ -23,9 +23,9 @@ fi
 FILES="
 +TARGETS|/usr/local/opnsense/service/templates/OPNsense/Unbound/+TARGETS
 expert.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/expert.conf
-access-list-PD.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/access-list-PD.conf
 update-kea-dhcp6.sh|/usr/local/sbin/update-kea-dhcp6.sh 
 mylocaldomain.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/mylocaldomain.conf
+actions_subnet.conf|/usr/local/opnsense/service/conf/actions.d/actions_subnet.conf
 "
 
 for ENTRY in $FILES; do
@@ -47,3 +47,6 @@ configctl unbound check
 
 # Restart Unbound service
 configctl unbound restart
+
+# Restart configd
+service configd restart

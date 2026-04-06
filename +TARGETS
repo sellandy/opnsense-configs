@@ -1,3 +1,2 @@
 expert.conf:/usr/local/etc/unbound.opnsense.d/expert.conf
 mylocaldomain.conf:/usr/local/etc/unbound.opnsense.d/mylocaldomain.conf
-access-list-PD.conf:/usr/local/etc/unbound.opnsense.d/access-list-PD.conf
