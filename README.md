@@ -57,8 +57,13 @@ Falls keine Domain übergeben wird, gibt das Skript eine Fehlermeldung aus.
 
 6. **Bereitstellen eines Kea-update-Skripts**
    - Das Shell Scrikpt macht ersmal gar nichts. Es muss entsprechend eingebunden werden um einen Trigger zu erhalten.
-     Empfehlung **/var/etc/dhcp6c_wan_script.sh**. Achtung dieses File wird nach einem OPNsense Update ersetzt!
+     Empfehlung **/var/etc/dhcp6c_wan_script.sh**. Achtung dieses File wird nach einem OPNsense Update ersetzt! --> funktioniert nicht mehr mit OPNsense 26.1.
 
+6. **Script Trigger**
+   - Wir nutzen die Möglichkeit über Cron-Job (OPNsense GUI) um regelmäßig das Script aufzurufen. Falls ihr eine effizienten Hook-Point kennt könnt ihr diesen gerne mit mir teilen.
+     Um das Custom Script **/var/etc/dhcp6c_wan_script.sh** in der OPNsense GUI zu sehen benötigen wir ein zusätzliches File, welches im Repo enthalten ist: `actions_subnet.conf`.
+  
+   
 ## Lizenz
 Dieses Projekt ist unter der **MIT-Lizenz** veröffentlicht. Siehe die Datei `LICENSE` für weitere Details.
 
