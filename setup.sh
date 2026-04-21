@@ -24,8 +24,10 @@ FILES="
 +TARGETS|/usr/local/opnsense/service/templates/OPNsense/Unbound/+TARGETS
 expert.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/expert.conf
 update-kea-dhcp6.sh|/usr/local/sbin/update-kea-dhcp6.sh 
+dynu-update.sh|/usr/local/sbin/dynu-update.sh
 mylocaldomain.conf|/usr/local/opnsense/service/templates/OPNsense/Unbound/mylocaldomain.conf
 actions_subnet.conf|/usr/local/opnsense/service/conf/actions.d/actions_subnet.conf
+actions_ddns.conf|/usr/local/opnsense/service/conf/actions.d/actions_ddns.conf
 "
 
 for ENTRY in $FILES; do
