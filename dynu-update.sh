@@ -3,13 +3,18 @@
 # IPv4: myip=
 # IPv6: myipv6=
 
-HOSTNAME="mycharon.freeddns.org"
-USERNAME="sellandy"
-PASSWORD="DLBV^zJ835scP^pIYh"
+
+# update your settings here
+HOSTNAME="<domain>"
+USERNAME="<username>"
+PASSWORD="<ip-update-pw>"
 
 IPV6_IF="igc0"
-IPV6_SUFFIX="8ea6:82ff:fe71:4649"
+IPV6_SUFFIX="cafe:babe:fe71:4649"
+#IPV6_SUFFIX="xxxx:xxxx:xxxx:xxxx"
 
+
+# do not touch after this line
 STATE_DIR="/var/db/dynu"
 IPV4_FILE="${STATE_DIR}/last_ipv4"
 IPV6_FILE="${STATE_DIR}/last_ipv6"
